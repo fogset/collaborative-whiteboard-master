@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Board from '../board/Board';
 
 import './style.css';
@@ -10,14 +10,15 @@ class Container extends React.Component
 
         this.state = {
             color: "#000000",
-            size: "5"
+            size: "5",
+            eraser: false
         }
     }
 
     changeColor(params) {
         this.setState({
             color: params.target.value
-        })
+        })   
     }
 
     changeSize(params) {
@@ -25,7 +26,14 @@ class Container extends React.Component
             size: params.target.value
         })
     }
-
+    handleClick = () => {
+        console.log('this is:', this);
+        this.setState({
+            color: "#FFFFFF",
+            eraser: true
+        })
+        console.log('if erase is:', this.state.color);
+      }
     render() {
 
         return (
@@ -47,6 +55,13 @@ class Container extends React.Component
                             <option> 30 </option>
                         </select>
                     </div>
+
+                    <div className="brushsize-container">
+                        <button onClick={this.handleClick}>
+                           Eraser
+                        </button>
+                    </div>
+                   
 
                 </div>
 
