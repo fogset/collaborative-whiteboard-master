@@ -28,10 +28,9 @@ class Container extends React.Component
     }
     handleClick = () => {
         console.log('this is:', this);
-        this.setState({
-            color: "#FFFFFF",
-            eraser: true
-        })
+        this.setState(prevState => ({
+            eraser: !prevState.eraser
+          }));
         console.log('if erase is:', this.state.color);
       }
     render() {
@@ -41,7 +40,10 @@ class Container extends React.Component
                 <div class="tools-section">
                     <div className="color-picker-container">
                         Select Brush Color : &nbsp; 
-                        <input type="color" value={this.state.color} onChange={this.changeColor.bind(this)}/>
+                        <input type="color" 
+                            value={(this.state.eraser === false) ? this.state.color: "#FFFFFF" } 
+                            onChange={this.changeColor.bind(this)}
+                        />
                     </div>
 
                     <div className="brushsize-container">
@@ -59,6 +61,11 @@ class Container extends React.Component
                     <div className="brushsize-container">
                         <button onClick={this.handleClick}>
                            Eraser
+                           { //Check if message failed
+                            (this.state.eraser === false)
+                              ? <div> false </div> 
+                              : <div> true </div> 
+                            }
                         </button>
                     </div>
                    
@@ -66,7 +73,11 @@ class Container extends React.Component
                 </div>
 
                 <div class="board-container">
-                    <Board color={this.state.color} size={this.state.size}></Board>
+                    <Board 
+                    color={
+                        (this.state.eraser === false) ? this.state.color: "#FFFFFF"
+                    } 
+                    size={this.state.size}></Board>
                 </div>
             </div>
         )
