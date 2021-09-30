@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Board from '../board/Board';
+import image from './Eraser.png';
 
 import './style.css';
 
@@ -41,7 +42,7 @@ class Container extends React.Component
                     <div className="color-picker-container">
                         Select Brush Color : &nbsp; 
                         <input type="color" 
-                            value={(this.state.eraser === false) ? this.state.color: "#FFFFFF" } 
+                            value={(this.state.eraser === false) ? this.state.color: this.state.color } 
                             onChange={this.changeColor.bind(this)}
                         />
                     </div>
@@ -68,7 +69,12 @@ class Container extends React.Component
                             }
                         </button>
                     </div>
+
+                    <div className="brushsize-container">
+                    <img className="eraserImage" src={image} alt="Logo" />
+                    </div>
                    
+                    
 
                 </div>
 
