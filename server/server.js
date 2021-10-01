@@ -1,7 +1,7 @@
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-var roomId = 2;
+var roomId = 4;
 
 io.on('connection', (socket) => {
       console.log(`User Connected: ${socket.id}`);
@@ -14,9 +14,9 @@ io.on('connection', (socket) => {
       //       //socket.broadcast.emit(room, "data from server");
       // });
 
-      socket.on('1', (data) => {
+      socket.on(roomId, (data) => {
             console.log(`current roomId ${roomId}`);
-            socket.broadcast.emit('1', data);
+            socket.broadcast.emit(roomId, data);
       })
 
 

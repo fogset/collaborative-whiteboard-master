@@ -10,7 +10,7 @@ class Board extends React.Component {
     ctx;
     isDrawing = false;
 
-    roomId;
+    roomId = 4;
 
     constructor(props) {
         super(props);
@@ -19,9 +19,9 @@ class Board extends React.Component {
         //this.socket.emit("join_room", this.roomId);
 
         this.socket = io.connect("http://localhost:5000");
+        var roomIdTemp = this.roomId;
 
-        this.socket.on('1', function (data) {
-
+        this.socket.on(roomIdTemp, function (data) {
             var root = this;
             var interval = setInterval(function () {
                 if (root.isDrawing) return;
@@ -47,7 +47,7 @@ class Board extends React.Component {
     componentWillReceiveProps(newProps) {
         this.ctx.strokeStyle = newProps.color;
         this.ctx.lineWidth = newProps.size;
-        this.roomId = 2;
+        //this.roomId = 4;
     }
 
     drawOnCanvas() {
@@ -86,7 +86,7 @@ class Board extends React.Component {
         canvas.addEventListener('mouseup', function () {
             canvas.removeEventListener('mousemove', onPaint, false);
         }, false);
-
+        var roomIdTemp = this.roomId;
         var root = this;
         var onPaint = function () {
             ctx.beginPath();
@@ -98,7 +98,7 @@ class Board extends React.Component {
             if (root.timeout != undefined) clearTimeout(root.timeout);
             root.timeout = setTimeout(function () {
                 var base64ImageData = canvas.toDataURL("image/png");
-                root.socket.emit('1', base64ImageData);
+                root.socket.emit(roomIdTemp, base64ImageData);
             }, 1000)
         };
     }
