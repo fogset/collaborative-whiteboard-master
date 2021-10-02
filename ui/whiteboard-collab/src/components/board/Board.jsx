@@ -1,27 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import io from 'socket.io-client';
 import './style.css';
 
+var ctx;
+var canvas;
+var last_mouse;
+var mouse;
+
 function Board({ color, size }) {
-    //const [color, setColor] = useState("#000000");
-    //const [size, setSize] = useState(10);
+    // var ctx;
+    // var canvas;
+    // var last_mouse;
+    // var mouse;
+
+
+    useLayoutEffect(() => {
+        console.log("layout  effect")
+        setUpImage()
+    }, []);
 
     useEffect(() => {
+        console.log("use effect" + ctx)
         drawImage()
     }, [color, size]);
 
-    function drawImage() {
-        var canvas = document.querySelector('#board');
-        var ctx = canvas.getContext('2d');
-        console.log("ctx" + ctx + " canvas: " + canvas)
+    console.log("outside of effect")
+
+    function setUpImage() {
+        canvas = document.querySelector('#board');
+        ctx = canvas.getContext('2d');
+
+        //console.log("ctx" + ctx + " canvas: " + canvas + "ctxMain" + ctxMain)
 
         var sketch = document.querySelector('#sketch');
         var sketch_style = getComputedStyle(sketch);
         canvas.width = parseInt(sketch_style.getPropertyValue('width'));
         canvas.height = parseInt(sketch_style.getPropertyValue('height'));
 
-        var mouse = { x: 0, y: 0 };
-        var last_mouse = { x: 0, y: 0 };
+        mouse = { x: 0, y: 0 };
+        last_mouse = { x: 0, y: 0 };
 
         /* Mouse Capturing Work */
         canvas.addEventListener('mousemove', function (e) {
@@ -31,7 +48,12 @@ function Board({ color, size }) {
             mouse.x = e.pageX - this.offsetLeft;
             mouse.y = e.pageY - this.offsetTop;
         }, false);
+    }
 
+
+
+
+    function drawImage() {
         /* Drawing on Paint App */
         ctx.lineWidth = size;
         ctx.lineJoin = 'round';
