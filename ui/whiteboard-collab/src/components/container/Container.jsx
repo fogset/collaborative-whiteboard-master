@@ -1,98 +1,74 @@
 import React, { useState } from 'react';
-import Board from '../board/Board';
+//import Board from '../board/Board';
 import image from './Eraser.png';
 
 import './style.css';
 
-class Container extends React.Component {
-    containerRoomId;
+function Container() {
+    const [color, setColor] = useState("#000000");
+    const [size, setSize] = useState(5);
+    const [eraser, setEraser] = useState(false);
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            color: "#000000",
-            size: "5",
-            eraser: false
-        }
-    }
-
-    componentWillReceiveProps(newProps) {
-        this.containerRoomId = newProps.room;
-    }
-
-    changeColor(params) {
-        this.setState({
-            color: params.target.value
-        })
-    }
-
-    changeSize(params) {
-        this.setState({
-            size: params.target.value
-        })
-    }
-    handleClick = () => {
+    const handleEraser = () => {
         console.log('this is:', this);
-        this.setState(prevState => ({
-            eraser: !prevState.eraser
-        }));
-        console.log('if erase is:', this.state.color);
+        if (eraser === false) {
+            setEraser(true);
+        } else {
+            setEraser(false);
+        }
+        console.log('if erase is:', color);
     }
-    render() {
 
-        return (
-            <div className="container">
-                <div class="tools-section">
 
-                    <div className="color-picker-container">
-                        {this.containerRoomId}
-                        Select Brush Color : &nbsp;
-                        <input type="color"
-                            value={(this.state.eraser === false) ? this.state.color : this.state.color}
-                            onChange={this.changeColor.bind(this)}
-                        />
-                    </div>
+    return (
+        <div className="container">
+            <div class="tools-section">
 
-                    <div className="brushsize-container">
-                        Select Brush Size : &nbsp;
-                        <select value={this.state.size} onChange={this.changeSize.bind(this)}>
-                            <option> 5 </option>
-                            <option> 10 </option>
-                            <option> 15 </option>
-                            <option> 20 </option>
-                            <option> 25 </option>
-                            <option> 30 </option>
-                        </select>
-                    </div>
-
-                    <div className="brushsize-container">
-                        <button onClick={this.handleClick}>
-                            Eraser
-                            { //Check if message failed
-                                (this.state.eraser === false)
-                                    ? <div> false </div>
-                                    : <div> true </div>
-                            }
-                        </button>
-                    </div>
-
-                    <div className="brushsize-container">
-                        <img className="eraserImage" src={image} alt="Logo" />
-                    </div>
-
+                <div className="color-picker-container">
+                    {/* //{this.containerRoomId} */}
+                    Select Brush Color : &nbsp;
+                    <input
+                        type="color"
+                        value={color}
+                        onChange={(event) => { setColor(event.target.value); }}
+                    />
                 </div>
 
-                <div class="board-container">
-                    <Board
-                        color={(this.state.eraser === false) ? this.state.color : "#FFFFFF"}
-                        size={this.state.size}
-                        roomId={this.containerRoomId}>
-                    </Board>
+                <div className="brushsize-container">
+                    Select Brush Size : &nbsp;
+                    <select value={size} onChange={(event) => { setSize(event.target.value); }}>
+                        <option> 5 </option>
+                        <option> 10 </option>
+                        <option> 15 </option>
+                        <option> 20 </option>
+                        <option> 25 </option>
+                        <option> 30 </option>
+                    </select>
                 </div>
+
+                <div className="brushsize-container">
+                    <button onClick={handleEraser}>
+                        Eraser
+                        {(eraser === false) ? <div> false </div> : <div> true </div>}
+                    </button>
+                </div>
+
+                <div className="brushsize-container">
+                    <img className="eraserImage" src={image} alt="Logo" />
+                </div>
+
             </div>
-        )
-    }
+
+            <div class="board-container">
+                {/* <Board
+                    color={(this.state.eraser === false) ? this.state.color : "#FFFFFF"}
+                    size={this.state.size}
+                    roomId={this.containerRoomId}>
+                </Board> */}
+            </div>
+        </div>
+    )
 }
 
-export default Container
+export default Container;
+
