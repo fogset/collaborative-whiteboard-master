@@ -1,59 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-
 import './style.css';
 
-class Board extends React.Component {
+function Board({ color, size }) {
+    //const [color, setColor] = useState("#000000");
+    //const [size, setSize] = useState(10);
 
-    timeout;
+    useEffect(() => {
+        drawImage()
+    }, [color, size]);
 
-    ctx;
-    isDrawing = false;
-
-    roomId = 4;
-
-    constructor(props) {
-        super(props);
-
-
-        //this.socket.emit("join_room", this.roomId);
-
-        this.socket = io.connect("http://localhost:5000");
-        var roomIdTemp = this.roomId;
-
-        this.socket.on(roomIdTemp, function (data) {
-            var root = this;
-            var interval = setInterval(function () {
-                if (root.isDrawing) return;
-                root.isDrawing = true;
-                clearInterval(interval);
-                var image = new Image();
-                var canvas = document.querySelector('#board');
-                var ctx = canvas.getContext('2d');
-                image.onload = function () {
-                    ctx.drawImage(image, 0, 0);
-
-                    root.isDrawing = false;
-                };
-                image.src = data;
-            }, 200)
-        })
-    }
-
-    componentDidMount() {
-        this.drawOnCanvas();
-    }
-
-    componentWillReceiveProps(newProps) {
-        this.ctx.strokeStyle = newProps.color;
-        this.ctx.lineWidth = newProps.size;
-        //this.roomId = 4;
-    }
-
-    drawOnCanvas() {
+    function drawImage() {
         var canvas = document.querySelector('#board');
-        this.ctx = canvas.getContext('2d');
-        var ctx = this.ctx;
+        var ctx = canvas.getContext('2d');
+        console.log("ctx" + ctx + " canvas: " + canvas)
 
         var sketch = document.querySelector('#sketch');
         var sketch_style = getComputedStyle(sketch);
@@ -72,12 +32,12 @@ class Board extends React.Component {
             mouse.y = e.pageY - this.offsetTop;
         }, false);
 
-
         /* Drawing on Paint App */
-        ctx.lineWidth = this.props.size;
+        ctx.lineWidth = size;
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
-        ctx.strokeStyle = this.props.color;
+        ctx.strokeStyle = color;
+        console.log("line color" + ctx.strokeStyle)
 
         canvas.addEventListener('mousedown', function (e) {
             canvas.addEventListener('mousemove', onPaint, false);
@@ -86,7 +46,7 @@ class Board extends React.Component {
         canvas.addEventListener('mouseup', function () {
             canvas.removeEventListener('mousemove', onPaint, false);
         }, false);
-        var roomIdTemp = this.roomId;
+
         var root = this;
         var onPaint = function () {
             ctx.beginPath();
@@ -94,24 +54,18 @@ class Board extends React.Component {
             ctx.lineTo(mouse.x, mouse.y);
             ctx.closePath();
             ctx.stroke();
-
-            if (root.timeout != undefined) clearTimeout(root.timeout);
-            root.timeout = setTimeout(function () {
-                var base64ImageData = canvas.toDataURL("image/png");
-                root.socket.emit(roomIdTemp, base64ImageData);
-            }, 1000)
+            //var base64ImageData = canvas.toDataURL("image/png");
         };
     }
 
-    render() {
-        return (
-
-            <div class="sketch" id="sketch">
-                <h1>Hello{this.roomId}</h1>
-                <canvas className="board" id="board"></canvas>
-            </div>
-        )
-    }
+    return (
+        <div class="sketch" id="sketch">
+            {color} {size}
+            <canvas className="board" id="board"></canvas>
+        </div>
+    );
 }
 
-export default Board
+export default Board;
+
+

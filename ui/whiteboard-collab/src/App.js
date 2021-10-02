@@ -11,7 +11,7 @@ function App() {
 
 
 
-  const joinRoom = () => {
+  function joinRoom() {
     if (username !== "" && room !== "") {
       //socket = io.connect("http://localhost:5000");
       //socket.emit("join_room", room);
@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="App">
-      <h3>Join A Chat + {info}</h3>
+      {/* <h3>Join A Chat</h3> */}
       <input
         type="text"
         placeholder="John..."
@@ -39,11 +39,8 @@ function App() {
         onChange={(event) => { setRoom(event.target.value); }}
       />
       <button onClick={joinRoom}>Join A Room</button>
-      <Container room={room} />
+      <Container />
     </div>
-
-
-
 
     //<Container />
   );

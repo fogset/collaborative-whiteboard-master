@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-//import Board from '../board/Board';
+import Board from '../board/Board';
 import image from './Eraser.png';
 
 import './style.css';
 
 function Container() {
     const [color, setColor] = useState("#000000");
-    const [size, setSize] = useState(5);
+    const [size, setSize] = useState(10);
     const [eraser, setEraser] = useState(false);
 
     const handleEraser = () => {
@@ -18,7 +18,6 @@ function Container() {
         }
         console.log('if erase is:', color);
     }
-
 
     return (
         <div className="container">
@@ -56,15 +55,15 @@ function Container() {
                 <div className="brushsize-container">
                     <img className="eraserImage" src={image} alt="Logo" />
                 </div>
-
             </div>
 
             <div class="board-container">
-                {/* <Board
-                    color={(this.state.eraser === false) ? this.state.color : "#FFFFFF"}
-                    size={this.state.size}
-                    roomId={this.containerRoomId}>
-                </Board> */}
+                <Board
+                    color={(eraser === false) ? color : "#FFFFFF"}
+                    size={size}
+                //roomId={this.containerRoomId}
+                >
+                </Board>
             </div>
         </div>
     )
