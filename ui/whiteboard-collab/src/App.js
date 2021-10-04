@@ -6,28 +6,31 @@ import Container from './components/container/Container';
 function App() {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
-  const [info, setInfo] = useState("");
+  const [roomId, setRoomId] = useState(null);
+  const [showPaint, setShowPaint] = useState(false);
   let socket;
 
 
 
   function joinRoom() {
     if (username !== "" && room !== "") {
-      // socket = io.connect("http://localhost:5000");
-      // socket.emit("join_room", room);
-      // socket.emit(room, "data from client")
-      // setShowChat(true);
-      // setRoom(room);
+      //socket = io.connect("http://localhost:5000");
+      //socket.emit("join_room", room);
+      //socket.emit(room, "data from client")
       // socket.on(tempRoom, (data) => {
       //   console.log(`test data is: ${data}}`);
       //   setInfo(data);
       // });
+
+      setRoomId(room);
+      setShowPaint(true);
+
     }
   };
 
   return (
     <div className="App">
-      {/* <h3>Join A Chat</h3> */}
+      {/* <h3>Join A Chat</h3> */}{roomId}
       <input
         type="text"
         placeholder="John..."
@@ -39,7 +42,7 @@ function App() {
         onChange={(event) => { setRoom(event.target.value); }}
       />
       <button onClick={joinRoom}>Join A Room</button>
-      <Container room={room} />
+      <Container room={roomId} />
     </div>
 
     //<Container />

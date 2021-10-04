@@ -2,13 +2,13 @@ import React from 'react';
 import io from 'socket.io-client';
 
 import './style.css';
-
+var outsideRoomId = null;
 class Board extends React.Component {
 
     timeout;
     socket = io.connect("http://localhost:5000");
 
-    roomId;
+    roomId = null;
 
     ctx;
     isDrawing = false;
@@ -16,23 +16,41 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
 
-        this.socket.on("canvas-data", function (data) {
+        this.state = { room: this.props.room }; // this.props is undefined
+        this.roomId = this.state.room;
+        outsideRoomId = this.state.room;
+        console.log("room is : state " + this.state.room);
+        console.log("room is : insideroomId " + this.roomId);
+        console.log("room is : outsideRoomId " + outsideRoomId);
 
-            var root = this;
-            var interval = setInterval(function () {
-                if (root.isDrawing) return;
-                root.isDrawing = true;
-                clearInterval(interval);
-                var image = new Image();
-                var canvas = document.querySelector('#board');
-                var ctx = canvas.getContext('2d');
-                image.onload = function () {
-                    ctx.drawImage(image, 0, 0);
-                    root.isDrawing = false;
-                };
-                image.src = data;
-            }, 200)
+
+        this.socket.on("canvas-data", function (data, room) {
+
+            console.log("receive canvas " + outsideRoomId);
+            if (room == outsideRoomId) {
+                console.log("they are equal finally")
+                var root = this;
+                var interval = setInterval(function () {
+                    if (root.isDrawing) return;
+                    root.isDrawing = true;
+                    clearInterval(interval);
+                    var image = new Image();
+                    var canvas = document.querySelector('#board');
+                    var ctx = canvas.getContext('2d');
+                    image.onload = function () {
+                        ctx.drawImage(image, 0, 0);
+                        root.isDrawing = false;
+                    };
+                    image.src = data;
+                }, 200)
+            }
+
         })
+
+    }
+
+    afterReceiveProps() {
+
     }
 
     componentDidMount() {
@@ -42,13 +60,15 @@ class Board extends React.Component {
     componentWillReceiveProps(newProps) {
         this.ctx.strokeStyle = newProps.color;
         this.ctx.lineWidth = newProps.size;
-        this.roomId = newProps.room;
+        //this.roomId = newProps.room;
+        //this.afterReceiveProps();
     }
 
     drawOnCanvas() {
         var canvas = document.querySelector('#board');
         this.ctx = canvas.getContext('2d');
         var ctx = this.ctx;
+        var tempRoom = this.roomId
 
         var sketch = document.querySelector('#sketch');
         var sketch_style = getComputedStyle(sketch);
@@ -92,16 +112,16 @@ class Board extends React.Component {
 
             if (root.timeout != undefined) clearTimeout(root.timeout);
             root.timeout = setTimeout(function () {
+                console.log("send canvas is " + tempRoom);
                 var base64ImageData = canvas.toDataURL("image/png");
-                root.socket.emit("canvas-data", base64ImageData);
-            }, 1000)
+                root.socket.emit("canvas-data", base64ImageData, tempRoom);
+            }, 500)
         };
     }
 
     render() {
         return (
             <div class="sketch" id="sketch">
-                <h1>Hello{this.roomId}</h1>
                 <canvas className="board" id="board"></canvas>
             </div>
         )

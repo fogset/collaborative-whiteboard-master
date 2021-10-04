@@ -20,8 +20,8 @@ io.on('connection', (socket) => {
       // })
 
 
-      socket.on('canvas-data', (data) => {
-            socket.broadcast.emit('canvas-data', data);
+      socket.on('canvas-data', (data, room) => {
+            socket.broadcast.emit('canvas-data', data, room);
       })
 
 

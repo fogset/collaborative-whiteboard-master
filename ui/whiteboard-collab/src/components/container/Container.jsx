@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Board from '../board/Board';
 import image from './Eraser.png';
 
@@ -9,11 +9,10 @@ function Container({ room }) {
     const [size, setSize] = useState(10);
     const [eraser, setEraser] = useState(false);
 
-    const handleEraser = () => {
 
+    const handleEraser = () => {
         setEraser(!eraser);
         console.log('this is:', this);
-        console.log('if erase is:', color);
     }
 
     return (
@@ -55,12 +54,15 @@ function Container({ room }) {
             </div>
 
             <div class="board-container">
-                <Board
-                    color={(eraser === false) ? color : "#FFFFFF"}
-                    size={size}
-                    room={room}
-                >
-                </Board>
+
+                {(room === null) ? <h1>please enter your room id</h1> :
+                    <Board
+                        color={(eraser === false) ? color : "#FFFFFF"}
+                        size={size}
+                        room={room}
+                    >
+                    </Board>
+                }
             </div>
         </div>
     )
