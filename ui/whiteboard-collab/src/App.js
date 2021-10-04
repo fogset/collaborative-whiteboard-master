@@ -39,7 +39,7 @@ function App() {
         onChange={(event) => { setRoom(event.target.value); }}
       />
       <button onClick={joinRoom}>Join A Room</button>
-      <Container />
+      <Container room={room} />
     </div>
 
     //<Container />

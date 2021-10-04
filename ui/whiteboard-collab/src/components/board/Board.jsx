@@ -6,25 +6,18 @@ var ctx;
 var canvas;
 var last_mouse;
 var mouse;
+//var timeout;
 
 function Board({ color, size }) {
-    // var ctx;
-    // var canvas;
-    // var last_mouse;
-    // var mouse;
-
+    var timeout;
 
     useLayoutEffect(() => {
-        console.log("layout  effect")
         setUpImage()
     }, []);
 
     useEffect(() => {
-        console.log("use effect" + ctx)
         drawImage()
     }, [color, size]);
-
-    console.log("outside of effect")
 
     function setUpImage() {
         canvas = document.querySelector('#board');
@@ -50,9 +43,6 @@ function Board({ color, size }) {
         }, false);
     }
 
-
-
-
     function drawImage() {
         /* Drawing on Paint App */
         ctx.lineWidth = size;
@@ -76,7 +66,12 @@ function Board({ color, size }) {
             ctx.lineTo(mouse.x, mouse.y);
             ctx.closePath();
             ctx.stroke();
-            //var base64ImageData = canvas.toDataURL("image/png");
+            //if (root.timeout != undefined) clearTimeout(root.timeout);
+            setTimeout(function () {
+                var base64ImageData = canvas.toDataURL("image/png");
+                console.log(base64ImageData);
+            }, 1000);
+
         };
     }
 

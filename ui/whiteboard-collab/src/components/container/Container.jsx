@@ -4,18 +4,15 @@ import image from './Eraser.png';
 
 import './style.css';
 
-function Container() {
+function Container({ room }) {
     const [color, setColor] = useState("#000000");
     const [size, setSize] = useState(10);
     const [eraser, setEraser] = useState(false);
 
     const handleEraser = () => {
         console.log('this is:', this);
-        if (eraser === false) {
-            setEraser(true);
-        } else {
-            setEraser(false);
-        }
+        setEraser(!eraser);
+
         console.log('if erase is:', color);
     }
 
@@ -24,7 +21,7 @@ function Container() {
             <div class="tools-section">
 
                 <div className="color-picker-container">
-                    {/* //{this.containerRoomId} */}
+                    {room}
                     Select Brush Color : &nbsp;
                     <input
                         type="color"
