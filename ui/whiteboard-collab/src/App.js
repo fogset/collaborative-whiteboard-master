@@ -34,7 +34,7 @@ function App() {
           <h3>Join A Painting room</h3>
           <input
             type="text"
-            placeholder="John..."
+            placeholder="Enter your username here"
             onChange={(event) => {
               setUsername(event.target.value);
             }}
@@ -52,28 +52,6 @@ function App() {
         <Container room={roomId} />
       )}
     </div>
-
-
-    // <div className="App">
-    //   {!showPaint ? (
-
-    //     <div className="joinPaintContainer">
-    //       <input
-    //         type="text"
-    //         placeholder="John..."
-    //         onChange={(event) => { setUsername(event.target.value); }}
-    //       />
-    //       <input
-    //         type="text"
-    //         placeholder="Room ID..."
-    //         onChange={(event) => { setRoom(event.target.value); }}
-    //       />
-    //       <button onClick={joinRoom}>Join A Room</button>
-    //     </div>
-    //   ) : (
-    //     <Container room={roomId} />
-    //   )}
-    // </div>
 
 
   );

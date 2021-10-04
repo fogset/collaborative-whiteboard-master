@@ -25,7 +25,6 @@ class Board extends React.Component {
 
 
         this.socket.on("canvas-data", function (data, room) {
-
             console.log("receive canvas " + outsideRoomId);
             if (room == outsideRoomId) {
                 console.log("they are equal finally")
@@ -44,9 +43,7 @@ class Board extends React.Component {
                     image.src = data;
                 }, 200)
             }
-
         })
-
     }
 
     afterReceiveProps() {

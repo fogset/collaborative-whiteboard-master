@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Board from '../board/Board';
 import image from './Eraser.png';
+import imageEnabled from './Eraser2.png';
 
 import './style.css';
 
@@ -19,7 +20,6 @@ function Container({ room }) {
         <div className="container">
 
             <div class="tools-section">
-
 
                 <h3> Welcome to your room: {room} </h3>
                 <div className="color-picker-container">
@@ -40,18 +40,20 @@ function Container({ room }) {
                         <option> 20 </option>
                         <option> 25 </option>
                         <option> 30 </option>
+                        <option> 40 </option>
+                        <option> 50 </option>
                     </select>
                 </div>
 
                 <div className="brushsize-container">
-                    <button onClick={handleEraser}>
+                    <button onClick={handleEraser}  >
                         Eraser
                         {(eraser === false) ? <div> disabled </div> : <div> enabled </div>}
                     </button>
                 </div>
 
                 <div className="brushsize-container">
-                    <img className="eraserImage" src={image} alt="Logo" />
+                    <img className="eraserImage" src={(eraser === false) ? image : imageEnabled} alt="Logo" onClick={handleEraser}/>
                 </div>
             </div>
 
