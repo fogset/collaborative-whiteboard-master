@@ -13,11 +13,11 @@ function App() {
 
   function joinRoom() {
     if (username !== "" && room !== "") {
-      //socket = io.connect("http://localhost:5000");
-      //socket.emit("join_room", room);
-      //socket.emit(room, "data from client")
-      //setShowChat(true);
-      //setRoom(room);
+      // socket = io.connect("http://localhost:5000");
+      // socket.emit("join_room", room);
+      // socket.emit(room, "data from client")
+      // setShowChat(true);
+      // setRoom(room);
       // socket.on(tempRoom, (data) => {
       //   console.log(`test data is: ${data}}`);
       //   setInfo(data);

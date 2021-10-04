@@ -14,9 +14,14 @@ io.on('connection', (socket) => {
       //       //socket.broadcast.emit(room, "data from server");
       // });
 
-      socket.on(roomId, (data) => {
-            console.log(`current roomId ${roomId}`);
-            socket.broadcast.emit(roomId, data);
+      // socket.on(roomId, (data) => {
+      //       console.log(`current roomId ${roomId}`);
+      //       socket.broadcast.emit(roomId, data);
+      // })
+
+
+      socket.on('canvas-data', (data) => {
+            socket.broadcast.emit('canvas-data', data);
       })
 
 

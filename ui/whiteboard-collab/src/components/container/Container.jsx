@@ -10,9 +10,9 @@ function Container({ room }) {
     const [eraser, setEraser] = useState(false);
 
     const handleEraser = () => {
-        console.log('this is:', this);
-        setEraser(!eraser);
 
+        setEraser(!eraser);
+        console.log('this is:', this);
         console.log('if erase is:', color);
     }
 
@@ -58,7 +58,7 @@ function Container({ room }) {
                 <Board
                     color={(eraser === false) ? color : "#FFFFFF"}
                     size={size}
-                //roomId={this.containerRoomId}
+                    room={room}
                 >
                 </Board>
             </div>
