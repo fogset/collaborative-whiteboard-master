@@ -17,10 +17,12 @@ function Container({ room }) {
 
     return (
         <div className="container">
+
             <div class="tools-section">
 
+
+                <h3> Welcome to your room: {room} </h3>
                 <div className="color-picker-container">
-                    {room}
                     Select Brush Color : &nbsp;
                     <input
                         type="color"
@@ -44,7 +46,7 @@ function Container({ room }) {
                 <div className="brushsize-container">
                     <button onClick={handleEraser}>
                         Eraser
-                        {(eraser === false) ? <div> false </div> : <div> true </div>}
+                        {(eraser === false) ? <div> disabled </div> : <div> enabled </div>}
                     </button>
                 </div>
 
@@ -55,7 +57,8 @@ function Container({ room }) {
 
             <div class="board-container">
 
-                {(room === null) ? <h1>please enter your room id</h1> :
+                {(room === null) ?
+                    <h1>please enter your room id</h1> :
                     <Board
                         color={(eraser === false) ? color : "#FFFFFF"}
                         size={size}

@@ -21,31 +21,61 @@ function App() {
       //   console.log(`test data is: ${data}}`);
       //   setInfo(data);
       // });
-
       setRoomId(room);
       setShowPaint(true);
-
     }
   };
 
   return (
+
     <div className="App">
-      {/* <h3>Join A Chat</h3> */}{roomId}
-      <input
-        type="text"
-        placeholder="John..."
-        onChange={(event) => { setUsername(event.target.value); }}
-      />
-      <input
-        type="text"
-        placeholder="Room ID..."
-        onChange={(event) => { setRoom(event.target.value); }}
-      />
-      <button onClick={joinRoom}>Join A Room</button>
-      <Container room={roomId} />
+      {!showPaint ? (
+        <div className="joinPaintContainer">
+          <h3>Join A Painting room</h3>
+          <input
+            type="text"
+            placeholder="John..."
+            onChange={(event) => {
+              setUsername(event.target.value);
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Room ID..."
+            onChange={(event) => {
+              setRoom(event.target.value);
+            }}
+          />
+          <button onClick={joinRoom}>Join A Room</button>
+        </div>
+      ) : (
+        <Container room={roomId} />
+      )}
     </div>
 
-    //<Container />
+
+    // <div className="App">
+    //   {!showPaint ? (
+
+    //     <div className="joinPaintContainer">
+    //       <input
+    //         type="text"
+    //         placeholder="John..."
+    //         onChange={(event) => { setUsername(event.target.value); }}
+    //       />
+    //       <input
+    //         type="text"
+    //         placeholder="Room ID..."
+    //         onChange={(event) => { setRoom(event.target.value); }}
+    //       />
+    //       <button onClick={joinRoom}>Join A Room</button>
+    //     </div>
+    //   ) : (
+    //     <Container room={roomId} />
+    //   )}
+    // </div>
+
+
   );
 }
 
