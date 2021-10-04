@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import './App.css';
 import io from 'socket.io-client';
 import Container from './components/container/Container';
+const { uuid } = require('uuidv4');
 
 function App() {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [roomId, setRoomId] = useState(null);
   const [showPaint, setShowPaint] = useState(false);
+  const [uuidv4, setUuidv4]= useState(uuid);
+  const [joinOrStart, setJoinOrStart] = useState(false);
   let socket;
 
 
@@ -21,7 +24,14 @@ function App() {
       //   console.log(`test data is: ${data}}`);
       //   setInfo(data);
       // });
-      setRoomId(room);
+      //setRoomId(room);
+      setShowPaint(true);
+      setJoinOrStart(true);
+    }
+  };
+
+  function startRoom() {
+    if (username !== "" && room !== "") {
       setShowPaint(true);
     }
   };
@@ -32,6 +42,7 @@ function App() {
       {!showPaint ? (
         <div className="joinPaintContainer">
           <h3>Join A Painting room</h3>
+          <h4>{room}</h4>
           <input
             type="text"
             placeholder="Enter your username here"
@@ -47,9 +58,10 @@ function App() {
             }}
           />
           <button onClick={joinRoom}>Join A Room</button>
+          <button onClick={startRoom}>start A new Room</button>
         </div>
       ) : (
-        <Container room={roomId} />
+        <Container room={(joinOrStart===true) ? room : uuidv4} username={username}/>
       )}
     </div>
 

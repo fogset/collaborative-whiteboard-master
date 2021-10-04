@@ -5,7 +5,7 @@ import imageEnabled from './Eraser2.png';
 
 import './style.css';
 
-function Container({ room }) {
+function Container({ room, username}) {
     const [color, setColor] = useState("#000000");
     const [size, setSize] = useState(10);
     const [eraser, setEraser] = useState(false);
@@ -21,7 +21,7 @@ function Container({ room }) {
 
             <div class="tools-section">
 
-                <h3> Welcome to your room: {room} </h3>
+                <h3>Hello {username} your room id: {room} </h3>
                 <div className="color-picker-container">
                     Select Brush Color : &nbsp;
                     <input
