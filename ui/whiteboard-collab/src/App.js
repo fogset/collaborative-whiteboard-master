@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Container from './components/container/Container';
 const { uuid } = require('uuidv4');
 
+
 function App() {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
@@ -12,8 +13,6 @@ function App() {
   const [uuidv4, setUuidv4]= useState(uuid);
   const [joinOrStart, setJoinOrStart] = useState(false);
   let socket;
-
-
 
   function joinRoom() {
     if (username !== "" && room !== "") {
@@ -31,10 +30,12 @@ function App() {
   };
 
   function startRoom() {
-    if (username !== "" && room !== "") {
+    if (username !== "") {
       setShowPaint(true);
     }
   };
+
+  
 
   return (
 
@@ -57,8 +58,13 @@ function App() {
               setRoom(event.target.value);
             }}
           />
+
+        
+
+
           <button onClick={joinRoom}>Join A Room</button>
           <button onClick={startRoom}>start A new Room</button>
+          
         </div>
       ) : (
         <Container room={(joinOrStart===true) ? room : uuidv4} username={username}/>
