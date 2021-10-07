@@ -112,7 +112,7 @@ class Board extends React.Component {
                 console.log("send canvas is " + tempRoom);
                 var base64ImageData = canvas.toDataURL("image/png");
                 root.socket.emit("canvas-data", base64ImageData, tempRoom);
-            }, 500)
+            }, 300)
         };
     }
 
