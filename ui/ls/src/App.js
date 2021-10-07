@@ -43,7 +43,7 @@ function App() {
       {!showPaint ? (
         <div className="joinPaintContainer">
           <h3>Join A Painting room</h3>
-          <h4>{room}</h4>
+          {/* <h4>{room}</h4> */}
           <input
             type="text"
             placeholder="Enter your username here"
